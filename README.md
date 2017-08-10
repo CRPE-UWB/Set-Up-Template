@@ -5,7 +5,11 @@ Examples of what can be included:
 
 * More Detailed Description of the content in the repository that you deem useful information
 
-* Libraries/Packages used
+* Libraries/Packages used:
+
+```{r, warning=FALSE, message=FALSE}
+install.packages()
+```
 
 * Explaining Functions
 
