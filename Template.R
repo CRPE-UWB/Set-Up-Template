@@ -15,6 +15,8 @@ setwd()
 # Tell which libraries are required
 library()
 
+# Functions --------------------------------------------------------------------------------------------------------
+
 # Connect to AWS --------------------------------------------------------------------------------------------------------
 
 # Key ID - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -47,10 +49,28 @@ readAWS_csv <- function(filename, filepath, bucket){
 
 
 data <- readAWS_csv("name-of-the-file.csv", "pathway-to-the-file" ,"database.crpe")
-backup <- data # allows you to keep a backup version of the file just in case + don't have to interact with AWS every time
+backup <- data # allows you to keep a backup version of the file just in case:
+               # don't have to interact with AWS every time  =
 data <- backup
 
 # Cleaning --------------------------------------------------------------------------------------------------------
 ...
 
+# Clean Specifically for the Database --------------------------------------------------------------------------------------------------------
+# Make sure all NAs are turned into -99
+data[is.na(ocr)] <- -99
 
+# All Commas/"," must go away 
+data[data == ","] <- ""
+data <- as.data.frame(sapply(data, gsub, pattern=",", replacement="")) # stringr version
+
+# All Tildes/"~" must be turned to Hyphens/"-" 
+data[data == "~"] <- "-"
+data <- as.data.frame(sapply(data, gsub, pattern="~", replacement="-")) # stringr version
+
+# Change all special characters with 2 versions:
+# 1) Use the Function from the Functions.R File, BUT it can only do one column at a time
+data$col_name <- no_more_special_characters(data$col_name)
+# 2) Use the stringr version that can be applied to all at once, BUT it can only change one character at a time
+data <- as.data.frame(sapply(data, gsub, pattern="ñ", replacement="n")) # usually the problem
+data <- as.data.frame(sapply(data, gsub, pattern="é", replacement="e")) # usually the problem
