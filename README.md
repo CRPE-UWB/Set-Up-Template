@@ -26,5 +26,5 @@ In this repoitory, you will find a starting template that can be used in any cod
 
 ```{r}
 # reads in the Functions.R file as a script so you have access to all the functions in the file
-source(Functions.R)
+source('Functions.R')
 ```
